@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<h2>Problema 1</h2>
+
+<div>
+    <form asp-action="Problema1" asp-controller="Home" method="post">
+        <div class="form-group">
+            <label for="num1">Numero</label>
+            <input type="number" class="form-control" id="num1" min="0" name="a">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<h2>Problema 2</h2>
+
+<div>
+    <form asp-action="Problema2" asp-controller="Home" method="post">
+        <div class="form-group">
+            <label for="num1">Dividendo</label>
+            <input type="number" class="form-control" id="num1" name="a">
+            <label for="num2">Divisor</label>
+            <input type="number" class="form-control" id="num2" min="1" name="b">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<h2>Problema 3</h2>
+
+<div>
+    <form asp-action="Problema3" asp-controller="Home" method="post">
+        <button type="submit" class="btn btn-primary">Consumir API</button>
+    </form>
+</div>
+
+<h2>Problema 4</h2>
+
+<div>
+    <form asp-action="Problema4" asp-controller="Home" method="post">
+        <div class="form-group">
+            <label for="num1">Kilometros conducidos</label>
+            <input type="number" class="form-control" id="num1" name="a">
+            <label for="num2">Litros usados</label>
+            <input type="number" class="form-control" id="num2" min="1" name="b">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
