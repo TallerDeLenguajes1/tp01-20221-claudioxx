@@ -3,7 +3,10 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TP1_ArmandoClaudio.Models;
 
@@ -60,21 +63,36 @@ namespace TP1_ArmandoClaudio.Controllers
 			return division;
 		}
 
-		public string Problema3()
+		public IActionResult Problema3()
 		{
-			int KMxLitro;
+			var url = $"https://apis.datos.gob.ar/georef/api/provincias?campos=id,nombre";
+			var request = (HttpWebRequest)WebRequest.Create(url);
+			request.Method = "GET";
+			request.ContentType = "application/json";
+			request.Accept = "application/json";
+			List<Provincia> ListProvincias;
+
 			try
 			{
-				KMxLitro = a / b;
+				using (WebResponse response = request.GetResponse())
+				{
+					using (Stream strReader = response.GetResponseStream())
+					{
+						//if (strReader == null) return "";
+						using (StreamReader objReader = new StreamReader(strReader))
+						{
+							string responseBody = objReader.ReadToEnd();
+							ListProvincias = JsonSerializer.Deserialize<ProvinciasArgentinas>(responseBody).Provincias;
+						}
+					}
+				}
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message + "\n");
-				KMxLitro = 0;
+				Console.WriteLine(ex.Message);
+				ListProvincias = null;
 			}
-			String mensaje = "Se recorre " + KMxLitro + " kilometros por cada litro.";
-
-			return mensaje;
+			return View(ListProvincias);
 		}
 
 
@@ -102,3 +120,33 @@ namespace TP1_ArmandoClaudio.Controllers
 		}
 	}
 }
+/*var url = $"https://apis.datos.gob.ar/georef/api/provincias?campos=id,nombre";
+			var request = (HttpWebRequest)WebRequest.Create(url);
+			request.Method = "GET";
+			request.ContentType = "application/json";
+			request.Accept = "application/json";
+
+			try
+			{
+				using (WebResponse response = request.GetResponse())
+				{
+					using (Stream strReader = response.GetResponseStream())
+					{
+						if (strReader == null) return "";
+						using(StreamReader objReader = new StreamReader(strReader))
+						{
+							string responseBody = objReader.ReadToEnd();
+							ProvinciasArgentinas ListProvincias = JsonSerializer.Deserialize<ProvinciasArgentinas>(responseBody);
+							foreach (Provincia prov in ListProvincias.Provincias)
+							{
+								return prov.Nombre;
+							}
+						}
+					}
+				}
+			}
+			catch
+			{
+
+			}
+*/	
